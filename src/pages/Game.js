@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import SettingsButton from '../components/SettingsButton';
 
 class Game extends Component {
   render() {
     return (
-      <div>Game</div>
+      <div>
+        <SettingsButton />
+        <h1>
+          Game
+        </h1>
+      </div>
     );
   }
 }
