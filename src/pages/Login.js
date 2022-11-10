@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { fetchToken } from '../service/api';
 
 class Login extends Component {
   state = {
@@ -15,9 +16,16 @@ class Login extends Component {
     return emailRegex.test(email) && name.trim().length >= 2;
   };
 
+  startPlay = async (history) => {
+    await fetchToken();
+    history.push('/game');
+  };
+
   render() {
-    const { handleInput, validateInputs, state: { name, email } } = this;
+    const { handleInput, validateInputs, startPlay,
+      props: { history }, state: { name, email } } = this;
     const isDisabled = !validateInputs(name, email);
+
     return (
       <div>
         <form>
@@ -47,6 +55,7 @@ class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ isDisabled }
+            onClick={ async () => { await startPlay(history); } }
           >
             Play
           </button>
@@ -55,5 +64,7 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {}.isRequired;
 
 export default Login;
