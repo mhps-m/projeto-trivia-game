@@ -6,8 +6,10 @@ class Login extends Component {
     email: '',
   };
 
+  // Faz o registro do que é digitado nos inputs no estado da página
   handleInput = ({ target: { id, value } }) => this.setState({ [id]: value });
 
+  // Faz a validação dos inputs: nome deve ter mais que dois caracteres, email deve ter formatação "abc@abc.com"
   validateInputs = (name, email) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email) && name.trim().length >= 2;
