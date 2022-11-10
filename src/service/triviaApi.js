@@ -1,7 +1,6 @@
 const fetchToken = async () => {
   const request = await fetch('https://opentdb.com/api_token.php?command=request');
   const { response_code: responseCode, token } = await request.json();
-  console.log(responseCode);
   if (responseCode !== 0) throw new Error('Erro ao requisitar Token');
   localStorage.setItem('token', token);
 };
