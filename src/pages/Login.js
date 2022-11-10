@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SettingsButton from '../components/SettingsButton';
 import { fetchToken } from '../service/api';
 
 class Login extends Component {
@@ -28,6 +29,7 @@ class Login extends Component {
 
     return (
       <div>
+        <SettingsButton history={ history } />
         <form>
           <label htmlFor="name">
             <input
