@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SettingsButton from '../components/SettingsButton';
-import { fetchToken } from '../service/api';
+import { fetchToken } from '../service/triviaApi';
+import { savePlayer } from '../redux/actions/playerActions';
 
 class Login extends Component {
   state = {
@@ -17,14 +19,15 @@ class Login extends Component {
     return emailRegex.test(email) && name.trim().length >= 2;
   };
 
-  startPlay = async (history) => {
+  startPlay = async ({ name, email }, dispatch, history) => {
     await fetchToken();
+    dispatch(savePlayer(name, email));
     history.push('/game');
   };
 
   render() {
     const { handleInput, validateInputs, startPlay,
-      props: { history }, state: { name, email } } = this;
+      props: { history, dispatch }, state: { name, email } } = this;
     const isDisabled = !validateInputs(name, email);
 
     return (
@@ -57,7 +60,7 @@ class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ isDisabled }
-            onClick={ async () => { await startPlay(history); } }
+            onClick={ async () => { await startPlay(this.state, dispatch, history); } }
           >
             Play
           </button>
@@ -69,4 +72,4 @@ class Login extends Component {
 
 Login.propTypes = {}.isRequired;
 
-export default Login;
+export default connect()(Login);
