@@ -7,7 +7,8 @@ class Question extends Component {
   };
 
   componentDidMount() {
-    const { getRandomSortNumber } = this;
+    const { getRandomSortNumber, timer1 } = this;
+    timer1();
     const randomSortNumber = getRandomSortNumber();
     this.setState({ randomSortNumber });
   }
@@ -62,6 +63,10 @@ class Question extends Component {
     );
   };
 
+  timer1 = () => (
+    setTimeout(() => this.setState({ isAnswered: true }), Number('35000'))
+  );
+
   render() {
     const { mapAnswers, getRandomSortNumber, props: { questionProp, nextQuestion },
       state: { isAnswered, randomSortNumber } } = this;
@@ -101,7 +106,5 @@ class Question extends Component {
     );
   }
 }
-
 Question.propTypes = {}.isRequired;
-
 export default Question;
