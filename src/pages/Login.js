@@ -19,6 +19,7 @@ class Login extends Component {
     return emailRegex.test(email) && name.trim().length >= 2;
   };
 
+  // Faz a requisição do Token, e em caso de sucesso, salva os dados no localStorage e redireciona à página de jogo
   startPlay = async ({ name, email }, dispatch, history) => {
     await fetchToken();
     dispatch(savePlayer(name, email));
