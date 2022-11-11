@@ -36,6 +36,7 @@ class Question extends Component {
               data-testid="correct-answer"
               style={ isAnswered ? answerStyles.correct : {} }
               onClick={ answerQuestion }
+              disabled={ isAnswered }
             >
               { answer }
             </button>
@@ -48,6 +49,7 @@ class Question extends Component {
             data-testid={ `wrong-answer-${index}` }
             style={ isAnswered ? answerStyles.wrong : {} }
             onClick={ answerQuestion }
+            disabled={ isAnswered }
           >
             { answer }
           </button>
