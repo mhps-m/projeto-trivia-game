@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SettingsButton from '../components/SettingsButton';
-import { fetchToken } from '../service/triviaApi';
+import { fetchToken, getToken } from '../service/triviaApi';
 import { savePlayer } from '../redux/actions/playerActions';
 
 class Login extends Component {
@@ -21,7 +21,8 @@ class Login extends Component {
 
   // Faz a requisição do Token, e em caso de sucesso, salva os dados no localStorage e redireciona à página de jogo
   startPlay = async ({ name, email }, dispatch, history) => {
-    await fetchToken();
+    const localToken = getToken();
+    if (localToken === null) await fetchToken();
     dispatch(savePlayer(name, email));
     history.push('/game');
   };
