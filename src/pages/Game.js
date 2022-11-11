@@ -7,13 +7,26 @@ import { fetchQuestions } from '../service/triviaApi';
 class Game extends Component {
   state = {
     questions: [],
-    // questionsIndex: 0,
+    questionsIndex: 0,
   };
 
   async componentDidMount() {
     const { handleGetQuestions, props: { history } } = this;
     await handleGetQuestions(history);
   }
+
+  // Aumenta o estado questionsIndex por 1, passando para a próxima questão
+  nextQuestion = () => {
+    const { state: { questions } } = this;
+    const ONE = 1;
+    this.setState((prevState) => ({
+      questionsIndex:
+        prevState.questionsIndex >= (questions.length - ONE)
+          ? prevState.questionsIndex
+          : prevState.questionsIndex + 1,
+
+    }));
+  };
 
   // Faz a requisição para a api e salva as questões no estado, ou apaga token e retorna à tela de Login em caso de erro
   handleGetQuestions = async (history) => {
@@ -29,13 +42,18 @@ class Game extends Component {
   };
 
   render() {
-    const { questions } = this.state;
+    const { nextQuestion, state: { questions, questionsIndex } } = this;
 
     return (
       <div>
         <Header />
         <SettingsButton />
-        { questions.length && <Question question={ questions[0] } /> }
+        { questions.length && (
+          <Question
+            questionProp={ questions[questionsIndex] }
+            nextQuestion={ nextQuestion }
+          />
+        ) }
       </div>
     );
   }

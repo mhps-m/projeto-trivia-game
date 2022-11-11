@@ -7,11 +7,15 @@ class Question extends Component {
   };
 
   componentDidMount() {
-    // Faz a randomização de um número usado na randomização das respostas e o salva no estado
-    const randomSortNumber = Math.random() - Number('0.5');
+    const { getRandomSortNumber } = this;
+    const randomSortNumber = getRandomSortNumber();
     this.setState({ randomSortNumber });
   }
 
+  // Faz a randomização de um número usado na randomização das respostas e o salva no estado
+  getRandomSortNumber = () => Math.random() - Number('0.5');
+
+  // Registra que a questão foi respondida e reseta estado
   answerQuestion = () => this.setState({ isAnswered: true });
 
   // Mapeia as respostas da questão em elementos button
@@ -36,6 +40,7 @@ class Question extends Component {
               data-testid="correct-answer"
               style={ isAnswered ? answerStyles.correct : {} }
               onClick={ answerQuestion }
+              disabled={ isAnswered }
             >
               { answer }
             </button>
@@ -48,6 +53,7 @@ class Question extends Component {
             data-testid={ `wrong-answer-${index}` }
             style={ isAnswered ? answerStyles.wrong : {} }
             onClick={ answerQuestion }
+            disabled={ isAnswered }
           >
             { answer }
           </button>
@@ -56,15 +62,14 @@ class Question extends Component {
     );
   };
 
-  // Monta o elemento da questão para renderização
-  renderQuestion = (questions, mapAnswers, isAnswered, randomSortNumber) => {
+  render() {
+    const { mapAnswers, getRandomSortNumber, props: { questionProp, nextQuestion },
+      state: { isAnswered, randomSortNumber } } = this;
+
     const { category, correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers, question } = questions;
+      incorrect_answers: incorrectAnswers, question } = questionProp;
 
-    // Faz o sort aleatório das respostas
     const answers = [...incorrectAnswers, correctAnswer].sort(() => randomSortNumber);
-
-    const answersElement = mapAnswers(answers, correctAnswer, isAnswered);
 
     return (
       <div>
@@ -75,17 +80,25 @@ class Question extends Component {
           { question }
         </p>
         <div data-testid="answer-options">
-          { answersElement }
+          { mapAnswers(answers, correctAnswer, isAnswered) }
         </div>
+
+        { isAnswered && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ () => {
+              nextQuestion();
+              this.setState({
+                isAnswered: false,
+                randomSortNumber: getRandomSortNumber(),
+              });
+            } }
+          >
+            Next
+          </button>)}
       </div>
     );
-  };
-
-  render() {
-    const { mapAnswers, renderQuestion,
-      props: { question }, state: { isAnswered, randomSortNumber } } = this;
-    console.log(question);
-    return renderQuestion(question, mapAnswers, isAnswered, randomSortNumber);
   }
 }
 
