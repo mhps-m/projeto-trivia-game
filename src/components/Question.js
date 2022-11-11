@@ -1,42 +1,70 @@
 import React, { Component } from 'react';
 
 class Question extends Component {
+  state = {
+    isAnswered: false,
+    randomSortNumber: 0,
+  };
+
+  componentDidMount() {
+    // Faz a randomização de um número usado na randomização das respostas e o salva no estado
+    const randomSortNumber = Math.random() - Number('0.5');
+    this.setState({ randomSortNumber });
+  }
+
+  answerQuestion = () => this.setState({ isAnswered: true });
+
   // Mapeia as respostas da questão em elementos button
-  mapAnswers = (answers, correct) => (
-    answers.map((answer, index) => {
-      if (answer === correct) {
+  mapAnswers = (answers, correct, isAnswered) => {
+    const { answerQuestion } = this;
+
+    const answerStyles = {
+      correct: {
+        border: '3px solid rgb(6, 240, 15)',
+      },
+      wrong: {
+        border: '3px solid red',
+      },
+    };
+    return (
+      answers.map((answer, index) => {
+        if (answer === correct) {
+          return (
+            <button
+              key={ answer }
+              type="button"
+              data-testid="correct-answer"
+              style={ isAnswered ? answerStyles.correct : {} }
+              onClick={ answerQuestion }
+            >
+              { answer }
+            </button>
+          );
+        }
         return (
           <button
             key={ answer }
             type="button"
-            data-testid="correct-answer"
+            data-testid={ `wrong-answer-${index}` }
+            style={ isAnswered ? answerStyles.wrong : {} }
+            onClick={ answerQuestion }
           >
             { answer }
           </button>
         );
-      }
-      return (
-        <button
-          key={ answer }
-          type="button"
-          data-testid={ `wrong-answer-${index}` }
-        >
-          { answer }
-        </button>
-      );
-    })
-  );
+      })
+    );
+  };
 
   // Monta o elemento da questão para renderização
-  renderQuestion = (questions, mapAnswers) => {
+  renderQuestion = (questions, mapAnswers, isAnswered, randomSortNumber) => {
     const { category, correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers, question } = questions;
 
     // Faz o sort aleatório das respostas
-    const answers = [...incorrectAnswers, correctAnswer]
-      .sort(() => Math.random() - Number('0.5'));
+    const answers = [...incorrectAnswers, correctAnswer].sort(() => randomSortNumber);
 
-    const answersElement = mapAnswers(answers, correctAnswer);
+    const answersElement = mapAnswers(answers, correctAnswer, isAnswered);
 
     return (
       <div>
@@ -54,9 +82,10 @@ class Question extends Component {
   };
 
   render() {
-    const { mapAnswers, renderQuestion, props: { question } } = this;
+    const { mapAnswers, renderQuestion,
+      props: { question }, state: { isAnswered, randomSortNumber } } = this;
     console.log(question);
-    return renderQuestion(question, mapAnswers);
+    return renderQuestion(question, mapAnswers, isAnswered, randomSortNumber);
   }
 }
 
