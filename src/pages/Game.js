@@ -18,8 +18,10 @@ class Game extends Component {
 
   // Aumenta o estado questionsIndex por 1, passando para a próxima questão
   nextQuestion = () => {
-    const { state: { questions } } = this;
+    const { state: { questions, questionsIndex }, props: { history } } = this;
     const ONE = 1;
+    const FOUR = 4;
+    if (questionsIndex === FOUR) history.push('/feedback');
     this.setState((prevState) => ({
       questionsIndex:
         prevState.questionsIndex >= (questions.length - ONE)
