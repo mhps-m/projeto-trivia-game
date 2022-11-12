@@ -1,9 +1,9 @@
-import { SAVE_PLAYER } from '../actions/playerActions';
+import { SAVE_PLAYER, ADD_SCORE } from '../actions/playerActions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
-  score: '',
+  assertions: 0,
+  score: 0,
   gravatarEmail: '',
 };
 
@@ -14,6 +14,13 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.name,
       gravatarEmail: action.email,
+    };
+
+  case ADD_SCORE:
+    return {
+      ...state,
+      score: state.score + action.score,
+      assertions: state.assertions + 1,
     };
 
   default:

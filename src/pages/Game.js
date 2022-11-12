@@ -12,6 +12,7 @@ class Game extends Component {
 
   async componentDidMount() {
     const { handleGetQuestions, props: { history } } = this;
+
     await handleGetQuestions(history);
   }
 
@@ -41,17 +42,36 @@ class Game extends Component {
     }
   };
 
-  render() {
-    const { nextQuestion, state: { questions, questionsIndex } } = this;
+  // Faz a randomização de um número usado na randomização das respostas e o salva no estado
+  getRandomSortNumber = () => (
+    Math.random() - Number('0.5')
+  );
 
+  // Embaralha as respostas e as salvam no estado
+  randomizeAnswers = (correctAnswer, incorrectAnswers) => {
+    const { getRandomSortNumber } = this;
+    return [...incorrectAnswers, correctAnswer].sort(() => getRandomSortNumber());
+  };
+
+  render() {
+    const { nextQuestion, randomizeAnswers, state: { questions, questionsIndex } } = this;
+    const currentQuestion = questions.length
+      ? questions[questionsIndex]
+      : { incorrect_answers: [], correct_answer: '' };
+
+    const { incorrect_answers: incorrectAnswers,
+      correct_answer: correctAnswer } = currentQuestion;
+
+    const randomizedAnswers = randomizeAnswers(correctAnswer, incorrectAnswers);
     return (
       <div>
         <Header />
         <SettingsButton />
         { questions.length && (
           <Question
-            questionProp={ questions[questionsIndex] }
+            questionProp={ currentQuestion }
             nextQuestion={ nextQuestion }
+            answers={ randomizedAnswers }
           />
         ) }
       </div>
