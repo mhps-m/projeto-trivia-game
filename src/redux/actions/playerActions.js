@@ -1,5 +1,6 @@
 const SAVE_PLAYER = 'SAVE_PLAYER';
 const ADD_SCORE = 'ADD_SCORE';
+const CLEAR_SCORE = 'CLEAR_SCORE';
 
 const savePlayer = (name, email) => ({
   type: SAVE_PLAYER,
@@ -12,4 +13,8 @@ const addScore = (score) => ({
   score,
 });
 
-export { SAVE_PLAYER, savePlayer, ADD_SCORE, addScore };
+const clearScore = () => ({
+  type: CLEAR_SCORE,
+});
+
+export { SAVE_PLAYER, savePlayer, ADD_SCORE, addScore, CLEAR_SCORE, clearScore };

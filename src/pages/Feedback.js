@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { clearScore } from '../redux/actions/playerActions';
 
 class Feedback extends Component {
   render() {
-    const { score, assertions, history } = this.props;
+    const { score, assertions, history, dispatch } = this.props;
     return (
       <div>
         <Header />
@@ -26,14 +27,19 @@ class Feedback extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
+          onClick={ () => {
+            history.push('/');
+            dispatch(clearScore());
+          } }
         >
           Play Again
         </button>
         <button
           type="button"
           data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
+          onClick={ () => {
+            history.push('/ranking');
+          } }
         >
           Ranking
         </button>
