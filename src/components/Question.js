@@ -11,20 +11,22 @@ class Question extends Component {
   componentDidMount() {
     const { getRandomSortNumber, timerFunction } = this;
     timerFunction();
-    console.log(['1', '2', '3', '4', '5'].sort(() => getRandomSortNumber()));
     this.setState({ randomSortNumber: getRandomSortNumber() });
   }
 
   componentDidUpdate() {
     const { state: { isAnswered, timer, timerId } } = this;
 
+    // Para o timer ao chegar a 0 ou ao responder uma pergunta
     if (timer === 0 || isAnswered) {
       clearInterval(timerId);
     }
   }
 
   // Faz a randomização de um número usado na randomização das respostas e o salva no estado
-  getRandomSortNumber = () => (Math.random() > Number('0.5') ? Number('1') : Number('-1'));
+  getRandomSortNumber = () => (
+    Math.random() > Number('0.5') ? Number('1') : Number('-1')
+  );
 
   // Registra que a questão foi respondida e reseta estado
   answerQuestion = () => this.setState({ isAnswered: true });
@@ -74,6 +76,7 @@ class Question extends Component {
     );
   };
 
+  // Faz rodar um timer que conta de 30 segundos a 0
   timerFunction = () => {
     const ONE_SECOND = 1000;
 
