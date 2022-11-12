@@ -62,7 +62,9 @@ class Question extends Component {
             type="button"
             data-testid={ `wrong-answer-${index}` }
             style={ isAnswered || timer === 0 ? answerStyles.wrong : {} }
-            onClick={ answerQuestion }
+            onClick={ () => {
+              answerQuestion();
+            } }
             disabled={ isAnswered || timer === 0 }
           >
             { answer }

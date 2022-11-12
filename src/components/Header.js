@@ -5,7 +5,6 @@ import convertToMD5 from '../service/gravatarApi';
 class Header extends Component {
   render() {
     const { props: { gravatarEmail, name, score, assertions } } = this;
-
     const convertedEmail = convertToMD5(gravatarEmail);
     const gravatarUrl = `https://www.gravatar.com/avatar/${convertedEmail}`;
 
