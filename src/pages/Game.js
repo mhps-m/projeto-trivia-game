@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
 import SettingsButton from '../components/SettingsButton';
 import { fetchQuestions } from '../service/triviaApi';
+import { clearScore } from '../redux/actions/playerActions';
 
 class Game extends Component {
   state = {
@@ -11,17 +13,34 @@ class Game extends Component {
   };
 
   async componentDidMount() {
-    const { handleGetQuestions, props: { history } } = this;
+    const { handleGetQuestions, props: { history, dispatch } } = this;
 
     await handleGetQuestions(history);
+    dispatch(clearScore());
   }
+
+  // Pega ranking do localStorage
+  getData = () => JSON.parse(localStorage.getItem('rankings')) || [];
+
+  // Salva os dados do jogador e seu desempenho no localStorage
+  saveData = (name, assertions, score, gravatarEmail) => {
+    const { getData } = this;
+    const rankings = getData();
+    const dataObject = { name, assertions, score, gravatarEmail };
+    const updatedRankings = [...rankings, dataObject];
+    localStorage.setItem('rankings', JSON.stringify(updatedRankings));
+  };
 
   // Aumenta o estado questionsIndex por 1, passando para a próxima questão
   nextQuestion = () => {
-    const { state: { questions, questionsIndex }, props: { history } } = this;
+    const { saveData, state: { questions, questionsIndex },
+      props: { history, name, assertions, score, gravatarEmail } } = this;
     const ONE = 1;
     const FOUR = 4;
-    if (questionsIndex === FOUR) history.push('/feedback');
+    if (questionsIndex === FOUR) {
+      saveData(name, assertions, score, gravatarEmail);
+      history.push('/feedback');
+    }
     this.setState((prevState) => ({
       questionsIndex:
         prevState.questionsIndex >= (questions.length - ONE)
@@ -82,6 +101,8 @@ class Game extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({ ...state.player });
+
 Game.propTypes = {}.isRequired;
 
-export default Game;
+export default connect(mapStateToProps)(Game);
