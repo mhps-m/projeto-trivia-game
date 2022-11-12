@@ -21,7 +21,7 @@ class Feedback extends Component {
           { assertions }
         </h2>
         <h1 data-testid="feedback-text">
-          A
+          {assertions >= Number('3') ? 'Well Done!' : 'Could be better...'}
         </h1>
         <button
           type="button"
