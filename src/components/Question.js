@@ -1,39 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addScore } from '../redux/actions/playerActions';
 
 class Question extends Component {
   state = {
     isAnswered: false,
-    randomSortNumber: 0,
     timer: 30,
     timerId: 0,
   };
 
   componentDidMount() {
-    const { getRandomSortNumber, timerFunction } = this;
+    const { timerFunction } = this;
+
     timerFunction();
-    this.setState({ randomSortNumber: getRandomSortNumber() });
   }
 
   componentDidUpdate() {
-    const { state: { isAnswered, timer, timerId } } = this;
-
-    // Para o timer ao chegar a 0 ou ao responder uma pergunta
-    if (timer === 0 || isAnswered) {
-      clearInterval(timerId);
-    }
+    const { state: { isAnswered, timer, timerId }, timerRunout } = this;
+    timerRunout(timer, isAnswered, timerId);
   }
-
-  // Faz a randomização de um número usado na randomização das respostas e o salva no estado
-  getRandomSortNumber = () => (
-    Math.random() > Number('0.5') ? Number('1') : Number('-1')
-  );
 
   // Registra que a questão foi respondida e reseta estado
   answerQuestion = () => this.setState({ isAnswered: true });
 
   // Mapeia as respostas da questão em elementos button
   mapAnswers = (answers, correct) => {
-    const { answerQuestion, state: { isAnswered, timer } } = this;
+    const { answerQuestion, handleScore,
+      state: { isAnswered, timer }, props: { dispatch } } = this;
 
     const answerStyles = {
       correct: {
@@ -53,7 +46,10 @@ class Question extends Component {
               type="button"
               data-testid="correct-answer"
               style={ isAnswered || timer === 0 ? answerStyles.correct : {} }
-              onClick={ answerQuestion }
+              onClick={ () => {
+                answerQuestion();
+                dispatch(addScore(handleScore()));
+              } }
               disabled={ isAnswered || timer === 0 }
             >
               { answer }
@@ -76,6 +72,28 @@ class Question extends Component {
     );
   };
 
+  // Soma a pontuação e salva no estado global ao acertar uma questão
+  handleScore = () => {
+    const { state: { timer }, difficultyValue } = this;
+    const TEN = 10;
+    return TEN + (timer * difficultyValue());
+  };
+
+  // Retorna um valor de acordo com a dificuldade da questão
+  difficultyValue = () => {
+    const { questionProp: { difficulty } } = this.props;
+    switch (difficulty) {
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return Number('3');
+    default:
+      return null;
+    }
+  };
+
   // Faz rodar um timer que conta de 30 segundos a 0
   timerFunction = () => {
     const ONE_SECOND = 1000;
@@ -89,17 +107,19 @@ class Question extends Component {
     this.setState({ timerId });
   };
 
+  // Faz a contagem do timer parar ao chegar a 0 ou ao responder a questão
+  timerRunout = (timer, isAnswered, timerId) => {
+    if (timer === 0 || isAnswered) {
+      clearInterval(timerId);
+    }
+  };
+
   render() {
-    const { mapAnswers, getRandomSortNumber, timerFunction,
-      props: { questionProp, nextQuestion },
-      state: { isAnswered, timer, randomSortNumber } } = this;
+    const { mapAnswers, timerFunction,
+      props: { questionProp, nextQuestion, answers },
+      state: { isAnswered, timer } } = this;
+    const { category, correct_answer: correctAnswer, question } = questionProp;
 
-    const { category, correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers, question } = questionProp;
-
-    const answers = [...incorrectAnswers, correctAnswer];
-    const randomAnswers = answers.sort(() => randomSortNumber);
-    console.log(answers);
     return (
       <div>
         <h1>
@@ -112,7 +132,7 @@ class Question extends Component {
           { question }
         </p>
         <div data-testid="answer-options">
-          { mapAnswers(randomAnswers, correctAnswer) }
+          { mapAnswers(answers, correctAnswer) }
         </div>
 
         { (isAnswered || timer === 0) && (
@@ -123,7 +143,6 @@ class Question extends Component {
               nextQuestion();
               this.setState({
                 isAnswered: false,
-                randomSortNumber: getRandomSortNumber(),
                 timer: 30,
               });
               timerFunction();
@@ -136,4 +155,5 @@ class Question extends Component {
   }
 }
 Question.propTypes = {}.isRequired;
-export default Question;
+
+export default connect()(Question);
