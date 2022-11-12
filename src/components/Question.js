@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { savePlayer } from '../redux/actions/playerActions';
 
 class Question extends Component {
   state = {
     isAnswered: false,
-    randomSortNumber: 0,
     timer: 30,
     timerId: 0,
+    sortedAnswers: [],
   };
 
   componentDidMount() {
-    const { getRandomSortNumber, timerFunction } = this;
+    const { timerFunction, difficultyValue,
+      handleAnswers } = this;
+    difficultyValue();
     timerFunction();
-    this.setState({ randomSortNumber: getRandomSortNumber() });
+    handleAnswers();
   }
 
   componentDidUpdate() {
@@ -23,18 +27,45 @@ class Question extends Component {
     }
   }
 
-  // Faz a randomização de um número usado na randomização das respostas e o salva no estado
-  getRandomSortNumber = () => (
-    Math.random() > Number('0.5') ? Number('1') : Number('-1')
-  );
+  handleAnswers = () => {
+    const { props: { questionProp }, timerFunction, difficultyValue } = this;
+    const { correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = questionProp;
+    const answers = [...incorrectAnswers, correctAnswer];
+    const sortedAnswers = answers.sort(() => Math.random() - Number('0.5'));
+    this.setState({ sortedAnswers });
+  };
+
+  // Função que retorna determinado valor de acordo com a dificuldade
+  difficultyValue = () => {
+    const { questionProp: { difficulty } } = this.props;
+    switch (difficulty) {
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return Number('3');
+    default:
+      return null;
+    }
+  };
+
+  // Função que calcula a pontuação obtida
+  handleScore = (timer, difficulty) => {
+    const { props: { name, email, dispatch } } = this;
+    const score = Number('10') + (timer * difficulty);
+    dispatch(savePlayer(name, email, score, 1));
+  };
 
   // Registra que a questão foi respondida e reseta estado
   answerQuestion = () => this.setState({ isAnswered: true });
 
   // Mapeia as respostas da questão em elementos button
   mapAnswers = (answers, correct) => {
-    const { answerQuestion, state: { isAnswered, timer } } = this;
-
+    const { answerQuestion,
+      state: { isAnswered, timer } } = this;
     const answerStyles = {
       correct: {
         border: '3px solid rgb(6, 240, 15)',
@@ -53,7 +84,10 @@ class Question extends Component {
               type="button"
               data-testid="correct-answer"
               style={ isAnswered || timer === 0 ? answerStyles.correct : {} }
-              onClick={ answerQuestion }
+              onClick={ () => {
+                answerQuestion();
+                this.handleScore(timer, this.difficultyValue());
+              } }
               disabled={ isAnswered || timer === 0 }
             >
               { answer }
@@ -66,7 +100,9 @@ class Question extends Component {
             type="button"
             data-testid={ `wrong-answer-${index}` }
             style={ isAnswered || timer === 0 ? answerStyles.wrong : {} }
-            onClick={ answerQuestion }
+            onClick={ () => {
+              answerQuestion();
+            } }
             disabled={ isAnswered || timer === 0 }
           >
             { answer }
@@ -90,16 +126,15 @@ class Question extends Component {
   };
 
   render() {
-    const { mapAnswers, getRandomSortNumber, timerFunction,
+    const { mapAnswers, timerFunction,
       props: { questionProp, nextQuestion },
-      state: { isAnswered, timer, randomSortNumber } } = this;
+      state: { isAnswered, timer, sortedAnswers } } = this;
 
     const { category, correct_answer: correctAnswer,
-      incorrect_answers: incorrectAnswers, question } = questionProp;
-
+      incorrect_answers: incorrectAnswers, question,
+    } = questionProp;
     const answers = [...incorrectAnswers, correctAnswer];
-    const randomAnswers = answers.sort(() => randomSortNumber);
-    console.log(answers);
+    // const randomAnswers = answers.sort(() => Math.random() - Number('0.5'));
     return (
       <div>
         <h1>
@@ -112,7 +147,7 @@ class Question extends Component {
           { question }
         </p>
         <div data-testid="answer-options">
-          { mapAnswers(randomAnswers, correctAnswer) }
+          { mapAnswers(sortedAnswers, correctAnswer) }
         </div>
 
         { (isAnswered || timer === 0) && (
@@ -123,10 +158,10 @@ class Question extends Component {
               nextQuestion();
               this.setState({
                 isAnswered: false,
-                randomSortNumber: getRandomSortNumber(),
                 timer: 30,
               });
               timerFunction();
+              this.handleAnswers();
             } }
           >
             Next
@@ -136,4 +171,9 @@ class Question extends Component {
   }
 }
 Question.propTypes = {}.isRequired;
-export default Question;
+
+const mapStateToProps = (state) => ({
+  ...state.player,
+});
+
+export default connect(mapStateToProps)(Question);
