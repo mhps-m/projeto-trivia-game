@@ -69,13 +69,14 @@ class Game extends Component {
       <div>
         <Header />
         <SettingsButton />
-        { questions.length && (
-          <Question
-            questionProp={ currentQuestion }
-            nextQuestion={ nextQuestion }
-            answers={ randomizedAnswers }
-          />
-        ) }
+        { questions.length
+          ? (
+            <Question
+              questionProp={ currentQuestion }
+              nextQuestion={ nextQuestion }
+              answers={ randomizedAnswers }
+            />
+          ) : ''}
       </div>
     );
   }

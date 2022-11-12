@@ -4,7 +4,7 @@ import convertToMD5 from '../service/gravatarApi';
 
 class Header extends Component {
   render() {
-    const { props: { gravatarEmail, name, score, assertions } } = this;
+    const { props: { gravatarEmail, name, score } } = this;
     const convertedEmail = convertToMD5(gravatarEmail);
     const gravatarUrl = `https://www.gravatar.com/avatar/${convertedEmail}`;
 
@@ -19,10 +19,7 @@ class Header extends Component {
           { name }
         </h3>
         <h3 data-testid="header-score">
-          { `Score: ${score}` }
-        </h3>
-        <h3>
-          { `Assertions: ${assertions}` }
+          { score }
         </h3>
       </div>
     );
