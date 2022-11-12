@@ -4,24 +4,34 @@ class Question extends Component {
   state = {
     isAnswered: false,
     randomSortNumber: 0,
+    timer: 30,
+    timerId: 0,
   };
 
   componentDidMount() {
-    const { getRandomSortNumber, timer1 } = this;
-    timer1();
-    const randomSortNumber = getRandomSortNumber();
-    this.setState({ randomSortNumber });
+    const { getRandomSortNumber, timerFunction } = this;
+    timerFunction();
+    console.log(['1', '2', '3', '4', '5'].sort(() => getRandomSortNumber()));
+    this.setState({ randomSortNumber: getRandomSortNumber() });
+  }
+
+  componentDidUpdate() {
+    const { state: { isAnswered, timer, timerId } } = this;
+
+    if (timer === 0 || isAnswered) {
+      clearInterval(timerId);
+    }
   }
 
   // Faz a randomização de um número usado na randomização das respostas e o salva no estado
-  getRandomSortNumber = () => Math.random() - Number('0.5');
+  getRandomSortNumber = () => (Math.random() > Number('0.5') ? Number('1') : Number('-1'));
 
   // Registra que a questão foi respondida e reseta estado
   answerQuestion = () => this.setState({ isAnswered: true });
 
   // Mapeia as respostas da questão em elementos button
-  mapAnswers = (answers, correct, isAnswered) => {
-    const { answerQuestion } = this;
+  mapAnswers = (answers, correct) => {
+    const { answerQuestion, state: { isAnswered, timer } } = this;
 
     const answerStyles = {
       correct: {
@@ -31,6 +41,7 @@ class Question extends Component {
         border: '3px solid red',
       },
     };
+
     return (
       answers.map((answer, index) => {
         if (answer === correct) {
@@ -39,9 +50,9 @@ class Question extends Component {
               key={ answer }
               type="button"
               data-testid="correct-answer"
-              style={ isAnswered ? answerStyles.correct : {} }
+              style={ isAnswered || timer === 0 ? answerStyles.correct : {} }
               onClick={ answerQuestion }
-              disabled={ isAnswered }
+              disabled={ isAnswered || timer === 0 }
             >
               { answer }
             </button>
@@ -52,9 +63,9 @@ class Question extends Component {
             key={ answer }
             type="button"
             data-testid={ `wrong-answer-${index}` }
-            style={ isAnswered ? answerStyles.wrong : {} }
+            style={ isAnswered || timer === 0 ? answerStyles.wrong : {} }
             onClick={ answerQuestion }
-            disabled={ isAnswered }
+            disabled={ isAnswered || timer === 0 }
           >
             { answer }
           </button>
@@ -63,21 +74,34 @@ class Question extends Component {
     );
   };
 
-  timer1 = () => (
-    setTimeout(() => this.setState({ isAnswered: true }), Number('35000'))
-  );
+  timerFunction = () => {
+    const ONE_SECOND = 1000;
+
+    const timerId = setInterval(() => {
+      this.setState((prevState) => ({
+        timer: prevState.timer > 0 ? prevState.timer - 1 : 0,
+      }));
+    }, ONE_SECOND);
+
+    this.setState({ timerId });
+  };
 
   render() {
-    const { mapAnswers, getRandomSortNumber, props: { questionProp, nextQuestion },
-      state: { isAnswered, randomSortNumber } } = this;
+    const { mapAnswers, getRandomSortNumber, timerFunction,
+      props: { questionProp, nextQuestion },
+      state: { isAnswered, timer, randomSortNumber } } = this;
 
     const { category, correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers, question } = questionProp;
 
-    const answers = [...incorrectAnswers, correctAnswer].sort(() => randomSortNumber);
-
+    const answers = [...incorrectAnswers, correctAnswer];
+    const randomAnswers = answers.sort(() => randomSortNumber);
+    console.log(answers);
     return (
       <div>
+        <h1>
+          { timer }
+        </h1>
         <h1 data-testid="question-category">
           {category}
         </h1>
@@ -85,10 +109,10 @@ class Question extends Component {
           { question }
         </p>
         <div data-testid="answer-options">
-          { mapAnswers(answers, correctAnswer, isAnswered) }
+          { mapAnswers(randomAnswers, correctAnswer) }
         </div>
 
-        { isAnswered && (
+        { (isAnswered || timer === 0) && (
           <button
             type="button"
             data-testid="btn-next"
@@ -97,7 +121,9 @@ class Question extends Component {
               this.setState({
                 isAnswered: false,
                 randomSortNumber: getRandomSortNumber(),
+                timer: 30,
               });
+              timerFunction();
             } }
           >
             Next
