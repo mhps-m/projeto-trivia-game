@@ -19,7 +19,7 @@ class Header extends Component {
           { name }
         </h3>
         <h3 data-testid="header-score">
-          { `Score: ${score}` }
+          { score }
         </h3>
         <h3>
           { `Assertions: ${assertions}` }

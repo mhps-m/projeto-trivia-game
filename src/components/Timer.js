@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Timer extends Component {
   componentDidMount() {
@@ -22,4 +23,10 @@ class Timer extends Component {
   }
 }
 
-export default Timer;
+mapStateToProps = (state) => ({
+  ...state.player,
+});
+
+Timer.propTypes = {}.isRequired;
+
+export default connect()(Timer);
