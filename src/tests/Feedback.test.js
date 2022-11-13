@@ -71,6 +71,9 @@ const btnRanking = await screen.findByTestId('btn-ranking');
 expect(btnRanking).toBeInTheDocument()
 userEvent.click(btnRanking);
 
+const btnHome = await screen.findByTestId('btn-go-home');
+userEvent.click(btnHome);
+
 await act(async ()=>
 history.push('/feedback')
 )
