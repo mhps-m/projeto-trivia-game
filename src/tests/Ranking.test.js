@@ -82,7 +82,12 @@ const btnHome = await screen.findByTestId('btn-go-home');
 userEvent.click(btnHome);
 expect(history.location.pathname).toBe("/")
 
+await act(async ()=>
+history.push('/settings')
+)
 
+const header = await screen.findByText('Settings')
+expect(header).toBeInTheDocument(); 
 
 })
 
@@ -124,6 +129,7 @@ test('Se  página de Rankings está ordenada corretamente', () => {
   screen.logTestingPlaygroundURL()
 
 })
+
 
 
 })
