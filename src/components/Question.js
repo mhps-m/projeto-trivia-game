@@ -84,16 +84,10 @@ class Question extends Component {
   // Retorna um valor de acordo com a dificuldade da questão
   difficultyValue = () => {
     const { questionProp: { difficulty } } = this.props;
-    switch (difficulty) {
-    case 'easy':
-      return 1;
-    case 'medium':
-      return 2;
-    case 'hard':
-      return Number('3');
-    default:
-      return null;
-    }
+    const THREE = 3;
+    if (difficulty === 'easy') return 1;
+    if (difficulty === 'medium') return 2;
+    if (difficulty === 'hard') return THREE;
   };
 
   // Faz rodar um timer que conta de 30 segundos a 0
@@ -102,7 +96,7 @@ class Question extends Component {
 
     const timerId = setInterval(() => {
       this.setState((prevState) => ({
-        timer: prevState.timer > 0 ? prevState.timer - 1 : 0,
+        timer: prevState.timer - 1,
       }));
     }, ONE_SECOND);
 

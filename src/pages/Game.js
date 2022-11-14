@@ -53,9 +53,10 @@ class Game extends Component {
   // Faz a requisição para a api e salva as questões no estado, ou apaga token e retorna à tela de Login em caso de erro
   handleGetQuestions = async (history) => {
     const getQuestions = await fetchQuestions();
+    const THREE = 3;
     switch (getQuestions) {
-    case Number('3'):
-      localStorage.clear();
+    case THREE:
+      localStorage.removeItem('token');
       history.push('/');
       break;
     default:
