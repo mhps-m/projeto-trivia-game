@@ -15,18 +15,9 @@ const fetchQuestions = async (amount = defaultQuantity) => {
   const token = getToken();
   const request = await fetch(`https://opentdb.com/api.php?amount=${amount}&token=${token}`);
   const { response_code: responseCode, results } = await request.json();
-  console.log(results);
 
-  switch (responseCode) {
-  case 0:
-    return results;
-
-  case Number('3'):
-    return responseCode;
-
-  default:
-    return null;
-  }
+  if (responseCode === 0) return results;
+  return responseCode;
 };
 
 export { fetchToken, getToken, fetchQuestions };
