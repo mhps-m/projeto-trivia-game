@@ -33,19 +33,15 @@ class Game extends Component {
 
   // Aumenta o estado questionsIndex por 1, passando para a próxima questão
   nextQuestion = () => {
-    const { saveData, state: { questions, questionsIndex },
+    const { saveData, state: { questionsIndex },
       props: { history, name, assertions, score, gravatarEmail } } = this;
-    const ONE = 1;
     const FOUR = 4;
     if (questionsIndex === FOUR) {
       saveData(name, assertions, score, gravatarEmail);
       history.push('/feedback');
     }
     this.setState((prevState) => ({
-      questionsIndex:
-        prevState.questionsIndex >= (questions.length - ONE)
-          ? prevState.questionsIndex
-          : prevState.questionsIndex + 1,
+      questionsIndex: prevState.questionsIndex + 1,
 
     }));
   };

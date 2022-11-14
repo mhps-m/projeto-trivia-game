@@ -84,4 +84,20 @@ userEvent.click(btnPlayAgain);
 
 })
 
+
+test('Se aparece mensagem "Could be better..." para o jogador que acertou menos de 3 questões', () => {
+  const initialState = {
+    player: {
+      name: 'José',
+      email: 'josé@tryber.com',
+      assertions: 2,
+      score: 20,
+    }
+  }
+
+  renderWithRouterAndRedux(<App />, initialState, '/feedback');
+
+  const feedbackText = screen.getByTestId('feedback-text');
+  expect(feedbackText).toHaveTextContent('Could be better...')
+})
 })

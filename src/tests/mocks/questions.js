@@ -1,4 +1,3 @@
-
 export const questionsResponse = ({
   response_code: 0,
   results: [
@@ -63,8 +62,7 @@ export const questionsResponse = ({
   ],
 });
 
-export const invalidTokenQuestionsResponse = () => ({
+export const invalidTokenQuestionsResponse = ({
   response_code: 3,
   results: [],
 })
-

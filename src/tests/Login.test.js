@@ -8,6 +8,8 @@ const mockToken = {
   token: 'c327rty23rgt782tr8',
 }
 
+beforeEach(() => jest.clearAllMocks())
+
 describe('testa a página de Login', () => {
   test('se os elementos são renderizados corretamente', () => {
     renderWithRouterAndRedux(<App />);
@@ -68,4 +70,5 @@ describe('testa a página de Login', () => {
 
     waitFor(() => expect(pathname).toBe('/game'));
   })
+
 })

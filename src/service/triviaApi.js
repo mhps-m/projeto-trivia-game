@@ -1,8 +1,7 @@
 // Faz a requisição do token usando a api
 const fetchToken = async () => {
   const request = await fetch('https://opentdb.com/api_token.php?command=request');
-  const { response_code: responseCode, token } = await request.json();
-  if (responseCode !== 0) throw new Error('Erro ao requisitar Token');
+  const { token } = await request.json();
   localStorage.setItem('token', token);
 };
 

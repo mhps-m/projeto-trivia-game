@@ -118,7 +118,7 @@ class Question extends Component {
 
     return (
       <div>
-        <h1>
+        <h1 data-testid="question-timer">
           { timer }
         </h1>
         <h1 data-testid="question-category">
