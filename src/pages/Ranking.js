@@ -35,7 +35,7 @@ class Ranking extends Component {
           <h3 data-testid={ `player-score-${index}` }>
             { score }
           </h3>
-          <h3>
+          <h3 data-testid={ `player-assertions-${index}` }>
             { `Quantidade de acertos: ${assertions}` }
           </h3>
         </div>
