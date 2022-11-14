@@ -4,8 +4,9 @@ import { act } from "react-dom/test-utils";
 import App from  '../App'
 import renderWithRouterAndRedux from  './helpers/renderWithRouterAndRedux';
 import { questionsResponse } from  "./mocks/questions";
+import Ranking from '../pages/Ranking'
 
-describe('testa a página de Feedbacks', () => {
+describe('testa a página de Rankings', () => {
   test('se os elementos são renderizados corretamente', async() => {
   jest.spyOn(global, 'fetch');
   global.fetch.mockResolvedValue({
@@ -20,7 +21,7 @@ userEvent.type(emailInput, 'jose@trybe.com')
 userEvent.click(loginButton);
 
 
-const  imgGravatar  = await  screen.findByRole('img');
+const imgGravatar  = await  screen.findByRole('img');
 expect(imgGravatar).toBeInTheDocument();
 
 const  firstCorrectAnswer  =  await  screen.findByTestId('correct-answer');
@@ -71,17 +72,59 @@ const btnRanking = await screen.findByTestId('btn-ranking');
 expect(btnRanking).toBeInTheDocument()
 userEvent.click(btnRanking);
 
+const rankingPlayerAssertions = screen.getByTestId('player-assertions-0')
+expect(rankingPlayerAssertions).toBeInTheDocument()
+
+const rankingIMG = screen.getByTestId('ranking-title')
+  expect(rankingIMG).toBeInTheDocument()
+
 const btnHome = await screen.findByTestId('btn-go-home');
 userEvent.click(btnHome);
+expect(history.location.pathname).toBe("/")
 
-await act(async ()=>
-history.push('/feedback')
-)
 
-const btnPlayAgain = await screen.findByTestId('btn-play-again')
-expect(btnPlayAgain).toBeInTheDocument()
-userEvent.click(btnPlayAgain);
 
 })
 
+test('Se  página de Rankings está vazia, quando não hà rankings salvos', () => {
+  localStorage.clear()
+  const {history} = renderWithRouterAndRedux(<Ranking  />);
+
+
+
+  
+  const rankingTitle = screen.getByRole('heading', {
+    name: /rankings/i
+  })
+  expect(rankingTitle).toBeInTheDocument()
+  
+  
+  const rankingIMG = screen.queryByRole('img', {
+    name: /avatar do jogador/i
+  })
+  expect(rankingIMG).not.toBeInTheDocument()
+  
+  
+  const rankingPlayerName = screen.queryByTestId('player-name-0')
+  expect(rankingPlayerName).not.toBeInTheDocument()
+  
+  
+  const rankingPlayerScore = screen.queryByTestId('player-score-0')
+  expect(rankingPlayerScore).not.toBeInTheDocument()
+
 })
+
+test('Se  página de Rankings está ordenada corretamente', () => {
+  const mocksRankings = [{name: 'Maria', score: 240, assertions: 4, gravatarEmail: 'maria@mariazinha.com'}
+  ,{name: 'José', score: 0, assertions: 0, gravatarEmail: 'jose@zezinho.com'}]
+  localStorage.setItem('rankings', JSON.stringify(mocksRankings))
+
+  renderWithRouterAndRedux(<Ranking />)
+
+  screen.logTestingPlaygroundURL()
+
+})
+
+
+})
+
