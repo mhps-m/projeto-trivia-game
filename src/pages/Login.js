@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import SettingsButton from '../components/SettingsButton';
 import { fetchToken, getToken } from '../service/triviaApi';
 import { savePlayer } from '../redux/actions/playerActions';
+import '../styles/login.css';
+import triviaImage from '../styles/img/logo trivia.png';
 
 class Login extends Component {
   state = {
@@ -33,31 +35,33 @@ class Login extends Component {
     const isDisabled = !validateInputs(name, email);
 
     return (
-      <div>
-        <SettingsButton history={ history } />
-        <form>
-          <label htmlFor="name">
-            <input
-              type="text"
-              data-testid="input-player-name"
-              id="name"
-              value={ name }
-              onChange={ handleInput }
-              placeholder="Nome"
-            />
-          </label>
-          <p />
-          <label htmlFor="email">
-            <input
-              type="email"
-              data-testid="input-gravatar-email"
-              id="email"
-              value={ email }
-              onChange={ handleInput }
-              placeholder="E-mail"
-            />
-          </label>
-          <p />
+      <div className="main__login">
+        <img src={ triviaImage } alt="Trivia Logo" className="trivia__image" />
+        <div className="form__container">
+          <form>
+            <label htmlFor="name">
+              <input
+                type="text"
+                data-testid="input-player-name"
+                id="name"
+                value={ name }
+                onChange={ handleInput }
+                placeholder="What is your name? "
+              />
+            </label>
+            <p />
+            <label htmlFor="email">
+              <input
+                type="email"
+                data-testid="input-gravatar-email"
+                id="email"
+                value={ email }
+                onChange={ handleInput }
+                placeholder="What is your E-mail? "
+              />
+            </label>
+            <p />
+          </form>
           <button
             type="button"
             data-testid="btn-play"
@@ -66,7 +70,8 @@ class Login extends Component {
           >
             Play
           </button>
-        </form>
+        </div>
+        <SettingsButton history={ history } />
       </div>
     );
   }
