@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
 import SettingsButton from '../components/SettingsButton';
-import { fetchQuestions } from '../service/triviaApi';
+import { fetchQuestions, fetchCustomizedQuestions } from '../service/triviaApi';
 import { clearScore } from '../redux/actions/playerActions';
+import Loading from '../components/Loading';
 
 class Game extends Component {
   state = {
@@ -33,10 +34,9 @@ class Game extends Component {
 
   // Aumenta o estado questionsIndex por 1, passando para a próxima questão
   nextQuestion = () => {
-    const { saveData, state: { questionsIndex },
+    const { saveData, state: { questionsIndex, questions },
       props: { history, name, assertions, score, gravatarEmail } } = this;
-    const FOUR = 4;
-    if (questionsIndex === FOUR) {
+    if (questionsIndex === questions.length - 1) {
       saveData(name, assertions, score, gravatarEmail);
       history.push('/feedback');
     }
@@ -48,7 +48,18 @@ class Game extends Component {
 
   // Faz a requisição para a api e salva as questões no estado, ou apaga token e retorna à tela de Login em caso de erro
   handleGetQuestions = async (history) => {
-    const getQuestions = await fetchQuestions();
+    const { props: { amount, category, difficulty, questionType } } = this;
+    const { isCustomized } = this.props;
+    const getQuestions = isCustomized
+      ? await fetchCustomizedQuestions(
+        Number(amount),
+        category,
+
+        difficulty,
+
+        questionType,
+      )
+      : await fetchQuestions();
     const THREE = 3;
     switch (getQuestions) {
     case THREE:
@@ -92,7 +103,7 @@ class Game extends Component {
               nextQuestion={ nextQuestion }
               answers={ randomizedAnswers }
             />
-          ) : ''}
+          ) : <Loading />}
       </div>
     );
   }

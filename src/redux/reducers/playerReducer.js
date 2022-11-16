@@ -1,4 +1,5 @@
-import { SAVE_PLAYER, ADD_SCORE, CLEAR_SCORE } from '../actions/playerActions';
+import { SAVE_PLAYER, ADD_SCORE,
+  CLEAR_SCORE, CUSTOMIZE_API } from '../actions/playerActions';
 
 const INITIAL_STATE = {
   name: '',
@@ -28,6 +29,16 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       score: 0,
       assertions: 0,
+    };
+
+  case CUSTOMIZE_API:
+    return {
+      ...state,
+      isCustomized: true,
+      amount: action.amount ? action.amount : 100,
+      category: action.category,
+      difficulty: action.difficulty,
+      questionType: action.questionType,
     };
 
   default:

@@ -19,4 +19,14 @@ const fetchQuestions = async (amount = defaultQuantity) => {
   return responseCode;
 };
 
-export { fetchToken, getToken, fetchQuestions };
+const fetchCustomizedQuestions = async (amount, category, difficulty, type) => {
+  const token = getToken();
+  const URL = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`;
+  console.log(URL);
+  const request = await fetch(URL);
+  const { response_code: responseCode, results } = await request.json();
+  if (responseCode === 0) return results;
+  return responseCode;
+};
+
+export { fetchToken, getToken, fetchQuestions, fetchCustomizedQuestions };
