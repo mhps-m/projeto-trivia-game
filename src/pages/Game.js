@@ -60,9 +60,8 @@ class Game extends Component {
         questionType,
       )
       : await fetchQuestions();
-    const THREE = 3;
-    switch (getQuestions) {
-    case THREE:
+    switch (typeof getQuestions) {
+    case 'number':
       localStorage.removeItem('token');
       history.push('/');
       break;

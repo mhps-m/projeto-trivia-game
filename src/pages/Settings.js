@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { customizedApi } from '../redux/actions/playerActions';
 import Loading from '../components/Loading';
+import '../styles/settings.css';
+import triviaImage from '../styles/img/logo trivia.png';
 
 class Settings extends Component {
   state = {
     category: [],
-    amount: 5,
+    amount: '',
     selectedCategory: '',
     selectedType: '',
     selectedDifficulty: '',
@@ -37,89 +39,133 @@ class Settings extends Component {
         {
           !triviaCategories
             ? <Loading />
-            : <div>
-              <h1 data-testid="settings-title">
-                Settings:
-              </h1>
-              <label htmlFor="amount">
-                Number of questions:
-                <input
-                  type="text"
-                  onChange={ handleQuestion }
-                  name="amount"
-                  value={ amount }
+            : (
+              <div>
+                <img
+                  src={ triviaImage }
+                  alt="Trivia Logo"
+                  className="trivia__image__settings"
                 />
-              </label>
-              {triviaCategories
-        && (
-
-          <label htmlFor="selectedCategory">
-            Category:
-            <select
-              value={ selectedCategory }
-              onChange={ handleQuestion }
-              name="selectedCategory"
-            >
-              {triviaCategories.map((category) => (
-                <option key={ category.id } value={ category.id }>{category.name}</option>
-              ))}
-            </select>
-          </label>
-        )}
-
-              <label htmlFor="selectedDifficulty">
-                Difficulty:
+                <div className="settings__box">
+                  <div className="settings__container">
+                    <h1
+                      data-testid="settings-title"
+                      className="settings__title"
+                    >
+                      SETTINGS
+                    </h1>
+                    <input
+                      type="number"
+                      onChange={ handleQuestion }
+                      name="amount"
+                      value={ amount }
+                      placeholder="Number of questions"
+                    />
+                    {triviaCategories
+              && (
                 <select
-                  name="selectedDifficulty"
-                  value={ selectedDifficulty }
+                  value={ selectedCategory }
                   onChange={ handleQuestion }
+                  name="selectedCategory"
+                  required
                 >
-                  <option value="easy">
-                    easy
+                  <option
+                    className="select__placeholder"
+                    value=""
+                    disabled
+                    hidden
+                  >
+                    Category
                   </option>
-                  <option value="medium">
-                    medium
+                  <option value="">
+                    Any
                   </option>
-                  <option value="hard">
-                    hard
-                  </option>
-                </select>
-              </label>
-              <label htmlFor="selectedType">
-                Type:
-                <select
-                  name="selectedType"
-                  value={ selectedType }
-                  onChange={ handleQuestion }
-                >
-                  <option value="any">
-                    any Type
-                  </option>
-                  <option value="multiple">
-                    Multiple Choise
-                  </option>
-                  <option value="boolean">
-                    True / False
-                  </option>
-                </select>
-              </label>
-              <button
-                type="button"
-                onClick={ () => {
-                  dispatch(customizedApi(
-                    amount,
-                    selectedCategory,
+                  {triviaCategories.map((category) => (
+                    <option
+                      key={ category.id }
+                      value={ category.id }
+                    >
+                      {category.name}
 
-                    selectedDifficulty,
+                    </option>
+                  ))}
+                </select>
+              )}
 
-                    selectedType,
-                  ));
-                  history.push('/');
-                } }
-              >
-                Save
-              </button>
+                    <select
+                      name="selectedDifficulty"
+                      value={ selectedDifficulty }
+                      onChange={ handleQuestion }
+                      required
+                    >
+                      <option
+                        className="select__placeholder"
+                        value=""
+                        hidden
+                        disabled
+                        selected
+                      >
+                        Difficulty
+                      </option>
+                      <option value="">
+                        Any
+                      </option>
+                      <option value="easy">
+                        Easy
+                      </option>
+                      <option value="medium">
+                        Medium
+                      </option>
+                      <option value="hard">
+                        Hard
+                      </option>
+                    </select>
+
+                    <select
+                      name="selectedType"
+                      value={ selectedType }
+                      onChange={ handleQuestion }
+                      required
+                    >
+                      <option
+                        className="select__placeholder"
+                        value=""
+                        hidden
+                        disabled
+                        selected
+                      >
+                        Type
+                      </option>
+                      <option value="">
+                        Any
+                      </option>
+                      <option value="multiple">
+                        Multiple Choice
+                      </option>
+                      <option value="boolean">
+                        True / False
+                      </option>
+                    </select>
+                    <button
+                      type="button"
+                      onClick={ () => {
+                        dispatch(customizedApi(
+                          amount,
+                          selectedCategory,
+
+                          selectedDifficulty,
+
+                          selectedType,
+                        ));
+                        history.push('/');
+                      } }
+                    >
+                      SAVE
+                    </button>
+                  </div>
+                </div>
               </div>
+            )
         }
       </div>
     );

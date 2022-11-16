@@ -1,0 +1,95 @@
+.trivia__image__settings {
+  position: absolute;
+  left: 50%;
+  width: 200px;
+  top: 90px;
+  transform: translateX(-50%);
+}
+
+.settings__box {
+  width: 489px;
+  background: #FFFFFF;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 489px;
+  display: flex;
+  justify-content: center;
+  height: 488px;
+}
+
+.settings__container {
+  display: flex;
+  flex-direction: column;
+  width: 387px;
+  text-align: center;
+  
+}
+
+.settings__container .settings__title {
+  height: 45px;
+  margin-top: 120px;
+  margin-bottom: 20px;
+
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 150%;
+  /* identical to box height, or 45px */
+  
+ 
+  letter-spacing: 0.20em;
+
+  color: #3C1B7A;
+}
+
+.settings__container input {
+  
+  padding-left: 20px;
+  font-style: normal;
+  font-weight: 400;
+  margin: 5px 0;
+  font-size: 14px;
+  height: 45px;
+  border: 1px solid #e1e5eb;
+  background-color: white;
+}
+
+.settings__container select {
+  padding: 12px 16px;
+  margin: 5px 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  height: 45px;
+  border: 1px solid #e1e5eb;
+  background-color: white;
+}
+
+
+.settings__container select:required:invalid {
+  color: #787878;
+}
+
+.settings__container option {
+  color: black;
+}
+
+.settings__container button {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Epilogue';
+    height: 45px;
+    letter-spacing: 0.20em;
+    margin: 5px 0;
+
+    background: #2FC18C;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  border: 1px transparent;
+}
