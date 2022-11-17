@@ -1,9 +1,15 @@
 .header__container {
     display: flex;
+    position: absolute;
     width: 100%;
     height: 113px;
 
     background: #FFFFFF;
+}
+
+.header__user__info .header__points {
+    width: 30px;
+    height: 30px;
 }
 
 .empty__div {
@@ -22,6 +28,8 @@
     margin: 0;
     top: 5.83%;
     bottom: 89.64%;
+    width: 30px;
+    height: 30px;
 
     color: #B5B5B5;
 }
