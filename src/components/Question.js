@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addScore } from '../redux/actions/playerActions';
+import triviaImage from '../styles/img/logo trivia.png';
+import vectorTime from '../styles/img/vectorTime.png';
+import errorImg from '../styles/img/error.png';
+import checkImg from '../styles/img/check.png';
 
 class Question extends Component {
   state = {
@@ -30,10 +34,16 @@ class Question extends Component {
 
     const answerStyles = {
       correct: {
-        border: '3px solid rgb(6, 240, 15)',
+        filter: 'drop-shadow(0px -1px 16px #2FC18C)',
+        backgroundImage: `url(${checkImg})`,
+        backgroundSize: '107%',
+        backgroundPosition: 'center',
       },
       wrong: {
-        border: '3px solid red',
+        filter: 'drop-shadow(0px -1px 16px #e2482f)',
+        backgroundImage: `url(${errorImg})`,
+        backgroundSize: '109%',
+        backgroundPosition: 'center',
       },
     };
 
@@ -43,6 +53,7 @@ class Question extends Component {
           return (
             <button
               key={ answer }
+              className="btn__answers"
               type="button"
               data-testid="correct-answer"
               style={ isAnswered || timer === 0 ? answerStyles.correct : {} }
@@ -59,6 +70,7 @@ class Question extends Component {
         return (
           <button
             key={ answer }
+            className="btn__answers"
             type="button"
             data-testid={ `wrong-answer-${index}` }
             style={ isAnswered || timer === 0 ? answerStyles.wrong : {} }
@@ -117,35 +129,65 @@ class Question extends Component {
     const { category, correct_answer: correctAnswer, question } = questionProp;
 
     return (
-      <div>
-        <h1 data-testid="question-timer">
-          { timer }
-        </h1>
-        <h1 data-testid="question-category">
-          {category}
-        </h1>
-        <p data-testid="question-text">
-          { question }
-        </p>
-        <div data-testid="answer-options">
-          { mapAnswers(answers, correctAnswer) }
+      <div className="question__container">
+        <div
+          className="header__question"
+        >
+          <img
+            src={ triviaImage }
+            alt="trivia_logo"
+            className="trivia__game__img"
+          />
+          <div className="question__category">
+            <p
+              data-testid="question-category"
+              className="question__title"
+            >
+              {category}
+            </p>
+            <div className="div__question">
+              <p data-testid="question-text">
+                { question }
+              </p>
+            </div>
+            <div className="question__timer">
+              <div>
+                <img src={ vectorTime } alt="Vector_time" />
+                <p
+                  data-testid="question-timer"
+                >
+                  {` Time Remaining: ${timer} `}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        { (isAnswered || timer === 0) && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ () => {
-              nextQuestion();
-              this.setState({
-                isAnswered: false,
-                timer: 30,
-              });
-              timerFunction();
-            } }
+        <div className="question_answers">
+          <div
+            data-testid="answer-options"
+            className="div__options"
           >
-            Next
-          </button>)}
+            { mapAnswers(answers, correctAnswer) }
+            <div className="div__next__button">
+              { (isAnswered || timer === 0) && (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  className="btn__next"
+                  onClick={ () => {
+                    nextQuestion();
+                    this.setState({
+                      isAnswered: false,
+                      timer: 30,
+                    });
+                    timerFunction();
+                  } }
+                >
+                  Next
+                </button>)}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

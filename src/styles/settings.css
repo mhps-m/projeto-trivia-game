@@ -93,3 +93,7 @@
   border-radius: 5px;
   border: 1px transparent;
 }
+
+.settings__container button:disabled {
+  background: #858585;
+}

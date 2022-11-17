@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import convertToMD5 from '../service/gravatarApi';
+import '../styles/header.css';
+import vectorPoints from '../styles/img/Vector.png';
+import SettingsButton from './SettingsButton';
 
 class Header extends Component {
   render() {
@@ -9,18 +12,31 @@ class Header extends Component {
     const gravatarUrl = `https://www.gravatar.com/avatar/${convertedEmail}`;
 
     return (
-      <div>
-        <img
-          src={ gravatarUrl }
-          alt="Avatar do jogador"
-          data-testid="header-profile-picture"
-        />
-        <h3 data-testid="header-player-name">
-          { name }
-        </h3>
-        <h3 data-testid="header-score">
-          { score }
-        </h3>
+      <div className="header__container">
+        <div className="empty__div" />
+        <div className="header__user__info">
+          <div>
+            <img
+              src={ gravatarUrl }
+              alt="Avatar do jogador"
+              data-testid="header-profile-picture"
+            />
+            <h3 data-testid="header-player-name">
+              { name }
+            </h3>
+          </div>
+          <div>
+            <img
+              src={ vectorPoints }
+              alt="points_img"
+              className="header__points"
+            />
+            <h3 data-testid="header-score">
+              {` Score: ${score} `}
+            </h3>
+          </div>
+          <SettingsButton />
+        </div>
       </div>
     );
   }

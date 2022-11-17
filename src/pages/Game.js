@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Question from '../components/Question';
-import SettingsButton from '../components/SettingsButton';
 import { fetchQuestions, fetchCustomizedQuestions } from '../service/triviaApi';
 import { clearScore } from '../redux/actions/playerActions';
 import Loading from '../components/Loading';
+import '../styles/game.css';
 
 class Game extends Component {
   state = {
@@ -92,9 +92,8 @@ class Game extends Component {
 
     const randomizedAnswers = randomizeAnswers(correctAnswer, incorrectAnswers);
     return (
-      <div>
+      <div className="game__container">
         <Header />
-        <SettingsButton />
         { questions.length
           ? (
             <Question

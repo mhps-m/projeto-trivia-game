@@ -159,6 +159,7 @@ class Settings extends Component {
                         ));
                         history.push('/');
                       } }
+                      disabled={ amount <= 0 }
                     >
                       SAVE
                     </button>
