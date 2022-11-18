@@ -151,14 +151,12 @@ class Question extends Component {
               </p>
             </div>
             <div className="question__timer">
-              <div>
-                <img src={ vectorTime } alt="Vector_time" />
-                <p
-                  data-testid="question-timer"
-                >
-                  {` Time Remaining: ${timer} `}
-                </p>
-              </div>
+              <img src={ vectorTime } alt="Vector_time" />
+              <p
+                data-testid="question-timer"
+              >
+                {` Time Remaining: ${timer} `}
+              </p>
             </div>
           </div>
         </div>

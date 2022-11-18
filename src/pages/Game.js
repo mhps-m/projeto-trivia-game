@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import Question from '../components/Question';
 import { fetchQuestions, fetchCustomizedQuestions } from '../service/triviaApi';
 import { clearScore } from '../redux/actions/playerActions';
-import Loading from '../components/Loading';
 import '../styles/game.css';
 
 class Game extends Component {
@@ -94,14 +93,11 @@ class Game extends Component {
     return (
       <div className="game__container">
         <Header />
-        { questions.length
-          ? (
-            <Question
-              questionProp={ currentQuestion }
-              nextQuestion={ nextQuestion }
-              answers={ randomizedAnswers }
-            />
-          ) : <Loading />}
+        <Question
+          questionProp={ currentQuestion }
+          nextQuestion={ nextQuestion }
+          answers={ randomizedAnswers }
+        />
       </div>
     );
   }
