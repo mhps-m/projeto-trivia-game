@@ -98,6 +98,8 @@ class Game extends Component {
           nextQuestion={ nextQuestion }
           answers={ randomizedAnswers }
         />
+        <footer />
+
       </div>
     );
   }
