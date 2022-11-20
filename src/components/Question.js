@@ -127,7 +127,6 @@ class Question extends Component {
       props: { questionProp, nextQuestion, answers },
       state: { isAnswered, timer } } = this;
     const { category, correct_answer: correctAnswer, question } = questionProp;
-
     return (
       <div className="question__container">
         <div
@@ -138,10 +137,19 @@ class Question extends Component {
             alt="trivia_logo"
             className="trivia__game__img"
           />
-          <div className="question__category">
+          <div
+            className="question__category"
+          >
             <p
               data-testid="question-category"
               className="question__title"
+              style={
+                category
+                  ? category.includes('Entertainment')
+                    ? { backgroundColor: '#00D5E2' }
+                    : { backgroundColor: '#F9BA18' }
+                  : null
+              }
             >
               {category}
             </p>
