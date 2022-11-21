@@ -81,7 +81,8 @@ class Game extends Component {
   };
 
   render() {
-    const { nextQuestion, randomizeAnswers, state: { questions, questionsIndex } } = this;
+    const { nextQuestion, randomizeAnswers, state: { questions, questionsIndex },
+      props: { history } } = this;
     const currentQuestion = questions.length
       ? questions[questionsIndex]
       : { incorrect_answers: [], correct_answer: '' };
@@ -92,7 +93,7 @@ class Game extends Component {
     const randomizedAnswers = randomizeAnswers(correctAnswer, incorrectAnswers);
     return (
       <div className="game__container">
-        <Header />
+        <Header history={ history } />
         <Question
           questionProp={ currentQuestion }
           nextQuestion={ nextQuestion }

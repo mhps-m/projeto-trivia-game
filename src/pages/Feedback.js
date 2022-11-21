@@ -26,7 +26,7 @@ class Feedback extends Component {
                   } : {
                     borderColor: 'red',
                     boxShadow: '0px 0px 9px #EA5D5D',
-              }
+                  }
               }
             />
           </div>
@@ -41,7 +41,7 @@ class Feedback extends Component {
               {assertions >= Number('3') ? 'Well Done!' : 'Could be better...'}
             </h1>
             <p>
-              {`You got ${assertions} questions rigth!`}
+              {`You got ${assertions} questions right!`}
             </p>
             <p data-testid="feedback-total-score">
               {`Your score is ${score} points `}
