@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import convertToMD5 from '../service/gravatarApi';
+import '../styles/ranking.css';
 
 class Ranking extends Component {
   state = {

@@ -5,6 +5,7 @@ import App from  '../App'
 import renderWithRouterAndRedux from  './helpers/renderWithRouterAndRedux';
 import { questionsResponse } from  "./mocks/questions";
 import Ranking from '../pages/Ranking'
+import Game from '../pages/Game'
 
 describe('testa a página de Rankings', () => {
   test('se os elementos são renderizados corretamente', async() => {
@@ -95,9 +96,6 @@ test('Se  página de Rankings está vazia, quando não hà rankings salvos', () 
   localStorage.clear()
   const {history} = renderWithRouterAndRedux(<Ranking  />);
 
-
-
-  
   const rankingTitle = screen.getByRole('heading', {
     name: /rankings/i
   })
@@ -128,9 +126,6 @@ test('Se  página de Rankings está ordenada corretamente', () => {
 
   screen.logTestingPlaygroundURL()
 
-})
-
-
-
+  })
 })
 
