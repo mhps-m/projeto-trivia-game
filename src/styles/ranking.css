@@ -1,0 +1,149 @@
+.main__ranking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 489px;
+
+}
+
+
+.ranking__list {
+    display: flex;
+    flex-direction: column;
+    width: 489px;
+    height: 488px;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: -10px;
+    z-index: 1;
+    background: #FFFFFF;
+    box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+
+}
+
+.ranking__list h3 {
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    /* identical to box height, or 24px */
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+}
+
+.ranking__list button {
+    width: 386px;
+    height: 45px;
+    left: 447px;
+    top: 550px;
+
+    background: #2FC18C;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    border-radius: 5px;
+
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.div__ranking {
+    display: flex;
+
+}
+
+.div__score {
+    display: flex;
+    margin: 5px 0 5px 0;
+
+}
+
+.ranking__list .trivia__image {
+    width: 177.79px;
+    height: 178.76px;
+    margin-top: -100px;
+}
+
+.ranking__list h1 {
+    width: 352px;
+    height: 45px;
+    justify-content: center;
+    margin: 15px 0 0 15px 0;
+
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 150%;
+    /* identical to box height, or 45px */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    color: #3C1B7A;
+}
+
+.div__score div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+    width: 332px;
+    height: 55px;
+    margin-right: -100px;
+
+    background: #EBEBEB;
+    border-radius: 100px;
+}
+
+.div__score div {
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    width: 184px;
+    height: 55px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+    border-radius: 100px;
+}
+
+.div__score div img {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px 0 10px;
+}
+
+.div__score div:first-child img {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px 0 10px;
+}
+
+.div__score img {
+    width: 37px;
+    height: 37px;
+    left: 457px;
+    top: 344px;
+    border-radius: 18.1373px;
+}
+
+.ranking__positions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 195px;
+    width: 100%;
+    overflow-y: scroll;
+}

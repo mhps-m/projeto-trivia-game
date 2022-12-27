@@ -1,0 +1,156 @@
+.main__feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    z-index: 1;
+}
+
+.div__feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    width: 439px;
+    height: 278px;
+    left: 421px;
+    top: 329px;
+
+    background: #FFFFFF;
+    box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.div__feedback h1 {
+    width: 439px;
+    height: 71px;
+    left: 421px;
+    top: 442px;
+
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 150%;
+    justify-content: center;
+    /* or 45px */
+    margin-top: 40px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #EA5D5D;
+}
+
+.div__feedback p {
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    /* or 24px */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #B5B5B5;
+}
+
+.btn__feedback {
+    display: flex;
+    z-index: 2;
+}
+
+.btn__feedback button {
+    width: 212.5px;
+    height: 45px;
+    left: 421px;
+    top: 622px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin: 7px;
+
+    color: #FFFFFF;
+}
+
+.btn__feedback button:first-child {
+    background: #00D5E2;
+}
+
+
+.btn__feedback button {
+    background: #2FC18C
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    height: 40vh;
+    left: 0px;
+    top: 557px;
+
+    background: #3C1B7A;
+}
+
+.main__feedback img {
+    width: 136.54px;
+    height: 153.79px;
+    left: 571.84px;
+    top: 28.21px;
+    margin: 25px 0 0;
+}
+
+.div__result {
+    z-index: 1;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.gravatar__img {
+    z-index: 2;
+    margin-bottom: -100px;
+    animation: shake 0.82s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 500px;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.gravatar__img img {
+    width: 213px;
+    height: 213px;
+
+    border: 4px solid;
+    border-radius: 200px
+}

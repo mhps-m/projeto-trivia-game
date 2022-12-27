@@ -7,7 +7,7 @@ import SettingsButton from './SettingsButton';
 
 class Header extends Component {
   render() {
-    const { props: { gravatarEmail, name, score } } = this;
+    const { props: { gravatarEmail, name, score, history } } = this;
     const convertedEmail = convertToMD5(gravatarEmail);
     const gravatarUrl = `https://www.gravatar.com/avatar/${convertedEmail}`;
 
@@ -35,7 +35,7 @@ class Header extends Component {
               {` Score: ${score} `}
             </h3>
           </div>
-          <SettingsButton />
+          <SettingsButton history={ history } />
         </div>
       </div>
     );
