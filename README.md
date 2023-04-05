@@ -1,4 +1,4 @@
-# Projeto Trivia React Redux
+# Projeto Jogo de Trivia
 
 Esse projeto apresenta uma aplicação front-end construída em React, com Redux para gerenciamento de estados. A aplicação se trata de um jogo de trivia/quiz que se alimenta da API da [Open Trivia DB](https://opentdb.com/).
 
