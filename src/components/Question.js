@@ -146,17 +146,16 @@ class Question extends Component {
               className="question__title"
               style={
                 category
-                  ? category.includes('Entertainment')
-                    ? { backgroundColor: '#00D5E2' }
-                    : { backgroundColor: '#F9BA18' }
-                  : null
+                  && category.includes('Entertainment')
+                  ? { backgroundColor: '#00D5E2' }
+                  : { backgroundColor: '#F9BA18' }
               }
             >
               {category}
             </p>
             <div className="div__question">
               <p data-testid="question-text">
-                { unescape(question) }
+                { question ? unescape(question) : '' }
               </p>
             </div>
             <div className="question__timer">
