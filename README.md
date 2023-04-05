@@ -45,7 +45,7 @@ https://user-images.githubusercontent.com/16674136/230156660-39dd4040-2e14-4f75-
 
 <br></br>
 
-### Configurações customizadas
+### Configurações customizadas:
 
 https://user-images.githubusercontent.com/16674136/230156708-c95fc014-d499-4c26-83c5-ef950dc52e99.mp4
 
@@ -53,7 +53,7 @@ https://user-images.githubusercontent.com/16674136/230156708-c95fc014-d499-4c26-
 
 ## ⚠️Avisos:warning:
 
-Os testes da aplicação estão **QUEBRADOS**. Eles foram desenvolvidos pré-estilização da aplicação, e não foram alterados posteriormente.
+Os testes da aplicação estão **QUEBRADOS**. Eles foram desenvolvidos pré-estilização da aplicação, e não foram alterados posteriormente, mas foram mantidos "as-is" para registro de desenvolvimento.
 <br></br>
 
 <h2 align="left">Contato</h2>
