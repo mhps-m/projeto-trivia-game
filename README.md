@@ -53,7 +53,7 @@ https://user-images.githubusercontent.com/16674136/230156708-c95fc014-d499-4c26-
 
 ## ⚠️Avisos:warning:
 
-Os testes da aplicação estão **QUEBRADOS**. Eles foram desenvolvidos pré-estilização da aplicação, e não foram alterados posteriormente, mas foram mantidos "as-is" para registro de desenvolvimento.
+Os testes da aplicação estão **QUEBRADOS**. Eles foram desenvolvidos pré-estilização da aplicação, e não foram alterados posteriormente, mas foram mantidos _as-is_ para registro de desenvolvimento.
 <br></br>
 
 <h2 align="left">Contato</h2>
