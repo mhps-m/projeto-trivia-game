@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { unescape } from 'he';
 import { addScore } from '../redux/actions/playerActions';
 import triviaImage from '../styles/img/logo trivia.png';
 import vectorTime from '../styles/img/vectorTime.png';
@@ -155,7 +156,7 @@ class Question extends Component {
             </p>
             <div className="div__question">
               <p data-testid="question-text">
-                { question }
+                { unescape(question) }
               </p>
             </div>
             <div className="question__timer">

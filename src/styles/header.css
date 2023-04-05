@@ -1,46 +1,44 @@
 .header__container {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 113px;
-    background: #FFFFFF;
+  background: #fff;
+  display: flex;
+  height: 113px;
+  position: absolute;
+  width: 100%;
 }
 
 .header__user__info .header__points {
-    width: 30px;
-    height: 30px;
+  height: 30px;
+  width: 30px;
 }
 
 .empty__div {
-    display: flex;
-    flex-basis: 50%;
+  display: flex;
+  flex-basis: 50%;
 }
 
 .header__user__info {
-    display: flex;
-    flex-basis: 50%;
-    align-items: center;
-    justify-content: space-evenly;
+  align-items: center;
+  display: flex;
+  flex-basis: 50%;
+  justify-content: space-evenly;
 }
 
 .header__user__info .settings__button {
-    margin: 0;
-    
-    width: 30px;
-    height: 30px;
-
-    color: #B5B5B5;
+  color: #b5b5b5;
+  height: 30px;
+  margin: 0;
+  width: 30px;
 }
 
 .header__user__info div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .header__user__info img {
-    margin-right: 5px;
-    width: 37px;
-    height: 37px;
-    border-radius: 18.1373px;
+  border-radius: 18.1373px;
+  height: 37px;
+  margin-right: 5px;
+  width: 37px;
 }
